@@ -9,8 +9,10 @@ const morgan = require('morgan');
 const app = express();
 const router = require('./router');
 const mongoose = require('mongoose');
+const dBConfig = require('./config').dbConfigCredentials;
+
 try{
-    mongoose.connect('mongodb://cristidrincu:crusader2@ds025232.mlab.com:25232/reactnodejwt');
+    mongoose.connect('mongodb://' + dBConfig.mongoUser + ':' + dBConfig.mongoPass + '@ds025232.mlab.com:25232/reactnodejwt');
 } catch(e) {
     console.log(e.message);
 }
