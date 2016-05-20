@@ -1,0 +1,4 @@
+
+[submodule "client-react"]
+	path = client-react
+	url = https://github.com/StephenGrider/ReduxSimpleStarter.git
