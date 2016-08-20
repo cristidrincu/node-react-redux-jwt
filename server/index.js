@@ -10,6 +10,7 @@ const app = express();
 const router = require('./router');
 const mongoose = require('mongoose');
 const dBConfig = require('./config').dbConfigCredentials;
+const cors = require('cors');
 
 try{
     mongoose.connect('mongodb://' + dBConfig.mongoUser + ':' + dBConfig.mongoPass + '@ds025232.mlab.com:25232/reactnodejwt');
@@ -19,6 +20,7 @@ try{
 
 
 app.use(morgan('combined'));
+app.use(cors()); //you can pass as a parameter to cors only accept requests from a specific domain(s) - read docs on cors middleware module
 app.use(bodyParser.json({ type: '*/*' }));
 router(app);
 
