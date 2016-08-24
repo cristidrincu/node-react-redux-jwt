@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { browserHistory } from 'react-router';
-import { AUTH_USER } from './types';
+import { AUTH_USER, AUTH_ERR, UNAUTH_USER } from './types';
 
 const ROOT_URL = "http://localhost:3090";
 
@@ -14,11 +14,27 @@ export function signinUser( {email, password} ) {
         axios.post(`${ROOT_URL}/signin`, { email, password }).then(response => {
             //if request is good, update state to indicate that the user is authenticated
             dispatch({ type: AUTH_USER }); //dispatch an action of type AUTH_USER
-            //save jwt token so users can make authenticated requests
+            //save jwt token so users can make authenticated requests            
+            localStorage.setItem('token', response.data.token);
             //redirect to the route /feature
             browserHistory.push('/feature');
         }).catch(() => {
             //if request is bad, display error message to user, have options to sign in again or sign up for the user
+            dispatch(authError('Wrong credentials for sign in'));
         });
+    };
+}
+
+export function authError(error) {
+    return {
+        type: AUTH_ERR,
+        payload: error
+    };
+}
+
+export function signoutUser() {
+    localStorage.removeItem('token');
+    return {
+        type: UNAUTH_USER         
     };
 }

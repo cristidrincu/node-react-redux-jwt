@@ -7,7 +7,7 @@ export default class App extends Component {
     return (
       <div>
         <Header/>
-        {this.props.children} {/*all components that are children of the App - this is how you render them*/}
+        { this.props.children } {/*all components that are children of the App - this is how you render them*/}
       </div>
     );
   }

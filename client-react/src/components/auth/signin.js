@@ -11,6 +11,16 @@ class Signin extends Component {
         this.props.signinUser({email, password});
     }
 
+    renderAlert() {
+        if(this.props.errorMessage) {
+            return(
+                <div className="alert alert-danger">
+                    <strong>Error logging in</strong> { this.props.errorMessage }
+                </div>
+            );
+        }
+    }
+
     render() {
         //reduxForm properties - we can write fields shorter using es6 rule - if key and value have the same name, we can just write: fields: { email, password }
         //however, i believe code is much more readable using fields: { email: email, password: password } for starters
@@ -26,9 +36,17 @@ class Signin extends Component {
                     <label>Password</label>
                     <input { ...password } type="password" className="form-control"/>
                 </fieldset>
+                { this.renderAlert() }
                 <button action="submit" className="btn btn-primary">Sign in</button>
             </form>
         );
+    }
+}
+
+function mapStateToProps(state) {
+    //pull the error message from global state and map it to the component's properties
+    return {
+        errorMessage: state.authentication.error
     }
 }
 
@@ -36,4 +54,4 @@ class Signin extends Component {
 export default reduxForm({
     form: 'signin', //the actual name of the form
     fields: ['email', 'password']
-}, null, actions)(Signin); //null represents mapStateToProps, which we do not need yet
+}, mapStateToProps, actions)(Signin); //null represents mapStateToProps, which we do not need yet
