@@ -5,9 +5,8 @@ import React, { Component } from 'react';
 import { reduxForm } from 'redux-form';
 import * as actions from '../../actions/index';
 
-class Signin extends Component {
-    handleFormSubmit( {email, password} ) {
-        console.log(email, password);
+class Signin extends Component {    
+    handleFormSubmit( {email, password} ) {        
         this.props.signinUser({email, password});
     }
 
@@ -27,7 +26,7 @@ class Signin extends Component {
         const {handleSubmit, fields: { email: email, password: password } } = this.props;
 
         return(
-            <form onSubmit={ handleSubmit(this.handleFormSubmit.bind(this)) }>
+            <form onSubmit={ handleSubmit(this.handleFormSubmit.bind(this)) }>            
                 <fieldset className="form-group">
                     <label>Email</label>
                     <input { ...email } className="form-control"/>
@@ -44,7 +43,7 @@ class Signin extends Component {
 }
 
 function mapStateToProps(state) {
-    //pull the error message from global state and map it to the component's properties
+    //pull the error message from state and map it to the component's properties
     return {
         errorMessage: state.authentication.error
     }
@@ -54,4 +53,4 @@ function mapStateToProps(state) {
 export default reduxForm({
     form: 'signin', //the actual name of the form
     fields: ['email', 'password']
-}, mapStateToProps, actions)(Signin); //null represents mapStateToProps, which we do not need yet
+}, mapStateToProps, actions)(Signin);

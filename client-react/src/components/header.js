@@ -1,6 +1,3 @@
-/**
- * Created by cristiandrincu on 8/20/16.
- */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
@@ -28,13 +25,13 @@ class Header extends Component {
     }
 
     render() {
-        return (
-            <nav className="navbar navbar-light">
-                <Link to="/" className="navbar-brand">Redux Auth</Link>
+        return (                        
+            <nav className="navbar navbar-default">                                    
+                <Link to="/" className="navbar-brand">Syneto Client Portal</Link>
                 <ul className="nav navbar-nav">                                        
-                   { this.renderAccountLinksBasedOnUserAuthentication() }                    
-                </ul>
-            </nav>
+                    { this.renderAccountLinksBasedOnUserAuthentication() }                    
+                </ul>                                                                    
+            </nav>            
         );
     }
 }

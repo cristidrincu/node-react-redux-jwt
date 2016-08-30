@@ -2,11 +2,26 @@ import React, { Component } from 'react';
 import { reduxForm } from 'redux-form';
 import * as actions from '../../actions/index';
 
-class Signup extends Component {
-    render() {
+class Signup extends Component {    
+    handleFormSubmit(formProps) {
+        //call action creator to signup user
+        this.props.signupUser(formProps);
+    }
+
+    renderAlert() {
+        if(this.props.errorMessage) {
+            return(
+                <div className="alert alert-danger">
+                    <strong>Error:</strong>{ this.props.errorMessage }
+                </div>
+            );
+        }        
+    }
+
+    render() {                
         const { handleSubmit, fields: {email: email, password: password, passwordConfirm: passwordConfirm} } = this.props;
         return(
-            <form>
+            <form onSubmit = { handleSubmit(this.handleFormSubmit.bind(this)) }>
                 <fieldset className="form-group">
                     <label>Email:</label>
                     <input className="form-control" {...email}/>
@@ -22,7 +37,8 @@ class Signup extends Component {
                     <input type="password" className="form-control" {...passwordConfirm}/>
                     { passwordConfirm.touched && passwordConfirm.error && <div className="error">{passwordConfirm.error}</div> }
                 </fieldset>
-                <button action="submit" className="btn btn-primary">Sign up</button>
+                { this.renderAlert() }
+                <button action="submit" className="btn btn-primary">Sign up</button>                                
             </form>
         );
     }
@@ -53,8 +69,14 @@ function validate(formProps) {
     return errors;
 }
 
+function mapStateToProps(state) {
+    return {
+        errorMessage: state.authentication.error
+    }
+}
+
 export default reduxForm({
     form: 'signup',
     fields: ['email', 'password', 'passwordConfirm'],
     validate: validate
-})(Signup);
+}, mapStateToProps, actions)(Signup);
