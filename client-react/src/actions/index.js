@@ -14,9 +14,10 @@ export function signinUser( {email, password} ) {
         //Submit email/password to server
         axios.post(`${ROOT_URL}/signin`, { email, password }).then(response => {
             //if request is good, update state to indicate that the user is authenticated
-            dispatch({ type: AUTH_USER }); //dispatch an action of type AUTH_USER
+            dispatch({ type: AUTH_USER, payload: response.data.role }); //dispatch an action of type AUTH_USER
             //save jwt token so users can make authenticated requests            
             localStorage.setItem('token', response.data.token);
+            localStorage.setItem('userRole', response.data.role);
             //redirect to the route /feature
             browserHistory.push('/feature');
         }).catch(() => {

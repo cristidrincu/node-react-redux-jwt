@@ -9,9 +9,13 @@ function tokenForUser(user) {
     return jwt.encode({ sub: user.id, iat: timestamp }, config.secret);
 }
 
+function userRole(user) {
+    return user.role;
+}
+
 exports.signin = function(req, res, next) {
     //we have access to req.user from passport's done(null, user) at line 34 in passport.js file
-    res.send({ token: tokenForUser(req.user) });
+    res.send({ token: tokenForUser(req.user), role: userRole(req.user) });
 };
 
 exports.signup = function(req, res, next) {
@@ -33,7 +37,8 @@ exports.signup = function(req, res, next) {
 
         const user = new User({
             email: email,
-            password: password
+            password: password,
+            role: 'reseller'
         });
 
         user.save(function(err) {
@@ -41,7 +46,7 @@ exports.signup = function(req, res, next) {
                 return next(err);
             }
 
-            res.json({ token: tokenForUser(user) });            
+            res.json({ token: tokenForUser(user), role: userRole(user) });            
         });
     })
 };

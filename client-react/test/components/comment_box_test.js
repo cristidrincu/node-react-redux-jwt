@@ -21,4 +21,18 @@ describe('Comment Box Component Test', () => {
         expect(component.find('button')).to.exist;
         expect(component.find('button')).to.contain('Submit comment');
     });
+
+    describe('entering some text', () => {        
+
+        it('shows text that is entered', () => {
+            component.find('textarea').simulate('change', 'new comment');
+            expect(component.find('textarea')).to.have.value('new comment');
+        });
+
+        it('when submitted, clears the input', () => {
+            //console.log(component); we can do these kinds of things since it is jsdom
+            component.simulate('submit');
+            expect(component.find('textarea')).to.have.value('');
+        });
+    });    
 });

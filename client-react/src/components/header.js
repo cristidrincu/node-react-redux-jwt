@@ -5,10 +5,11 @@ import { Link } from 'react-router';
 class Header extends Component {
     renderAccountLinksBasedOnUserAuthentication() {
         {/*Investigate why the import of utils/app-messages/auth.js does not seem to work*/}
-        if(this.props.authStatus) {
+        if(this.props.authStatus && this.props.userRole === 'reseller') {
             return( 
                 <li className="nav-item">
                     <Link to="/signout" className="nav-link">Sign out</Link>
+                    <Link to="/invite-friends" className="nav-link">Invite your friends</Link>
                 </li>
             ); 
         } else {
@@ -38,7 +39,8 @@ class Header extends Component {
 
 function mapStateToProps(state) {
     return {
-        authStatus: state.authentication.authenticated
+        authStatus: state.authentication.authenticated,
+        userRole: state.authentication.userRole
     }
 }
 
