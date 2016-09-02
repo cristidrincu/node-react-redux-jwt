@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { browserHistory } from 'react-router';
-import { AUTH_USER, AUTH_ERR, UNAUTH_USER, FETCH_MESSAGE } from './types';
+import { AUTH_USER, AUTH_ERR, UNAUTH_USER, FETCH_MESSAGE, FETCH_COMMENTS, ADD_COMMENT } from './types';
 
 const ROOT_URL = "http://localhost:3090";
 const config = { headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` } };
@@ -50,7 +50,7 @@ export function authError(error) {
 }
 
 export function signoutUser() {
-    localStorage.removeItem('token'); //if we do not remove the token, we can implement 'Keep me signed in' functionality
+    localStorage.removeItem('token');
     return {
         type: UNAUTH_USER         
     };

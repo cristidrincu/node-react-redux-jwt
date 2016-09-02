@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import * as comment_actions from '../../actions/comments'; //take out comment actions from types and put them in their comment types file
 
 class CommentBox extends Component {
-    constructor(props) {
-        super(props);
-
+    constructor(props) {        
+        super(props);        
         this.state = { comment: '' };
     }
 
@@ -13,8 +13,9 @@ class CommentBox extends Component {
     }
 
     handleSubmit(event) {
-        event.preventDefault();
-        this.setState({ comment: '' });
+        event.preventDefault();    
+        this.props.addCommentToList(this.state.comment);            
+        this.setState({ comment: '' });        
     }
 
     render() {
@@ -27,4 +28,8 @@ class CommentBox extends Component {
     }
 }
 
-export default CommentBox;
+//we do not care about state, we just want the action for adding a comment. The first argument to connect() is mapStateToProps, but since
+//we do not need it, it will be null
+
+//bind all action creators to our CommentBox component
+export default connect(null, comment_actions)(CommentBox);
