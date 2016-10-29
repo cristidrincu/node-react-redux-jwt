@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
 import { reduxForm } from 'redux-form';
 import * as actions from '../../actions/index';
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
+
+const tempStyles = {
+    marginTop: 40
+}
 
 class Signup extends Component {    
     handleFormSubmit(formProps) {
@@ -18,28 +24,35 @@ class Signup extends Component {
         }        
     }
 
-    render() {                
+    render() {                        
         const { handleSubmit, fields: {email: email, password: password, passwordConfirm: passwordConfirm} } = this.props;
         return(
-            <form onSubmit = { handleSubmit(this.handleFormSubmit.bind(this)) }>
-                <fieldset className="form-group">
-                    <label>Email:</label>
-                    <input className="form-control" {...email}/>
-                    { email.touched && email.error && <div className="error">{email.error}</div> }
-                </fieldset>
-                <fieldset className="form-group">
-                    <label>Password:</label>
-                    <input type="password" className="form-control" {...password}/>
-                    { password.touched && password.error && <div className="error">{password.error}</div> }
-                </fieldset>
-                <fieldset className="form-group">
-                    <label>Password confirm:</label>
-                    <input type="password" className="form-control" {...passwordConfirm}/>
-                    { passwordConfirm.touched && passwordConfirm.error && <div className="error">{passwordConfirm.error}</div> }
-                </fieldset>
-                { this.renderAlert() }
-                <button action="submit" className="btn btn-primary">Sign up</button>                                
-            </form>
+            <div className="container" style={tempStyles}>
+                <form onSubmit = { handleSubmit(this.handleFormSubmit.bind(this)) }>
+                <TextField 
+                    fullWidth = { true }
+                    hintText = "Your email address"
+                    floatingLabelText="Your email address"
+                    errorText = {email.touched && email.error}
+                    {...email}/>
+                <TextField 
+                    fullWidth = { true }
+                    hintText = "Type a password"
+                    floatingLabelText="Type a password"
+                    errorText = {password.touched && password.error}
+                    type="password"
+                    {...password}/>
+                <TextField 
+                    fullWidth = { true }
+                    hintText = "Confirm password"
+                    floatingLabelText="Confirm password"
+                    errorText = {passwordConfirm.touched && passwordConfirm.error}
+                    type="password"
+                    {...passwordConfirm}/>                                        
+                    { this.renderAlert() }
+                    <RaisedButton type="submit" label="Signup" primary={true}/>                                
+                </form>
+            </div>
         );
     }
 }
@@ -71,7 +84,8 @@ function validate(formProps) {
 
 function mapStateToProps(state) {
     return {
-        errorMessage: state.authentication.error
+        errorMessage: state.authentication.error,
+        userDetails: state.userInfo.userDetails
     }
 }
 

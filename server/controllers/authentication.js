@@ -1,6 +1,9 @@
 const jwt = require('jwt-simple');
 const config = require('../config');
 const User = require('../models/user');
+const mongooseHelperUserDetails = require('../mongoose-helpers/user-details');
+
+const defaultUserType = 'reseller';
 
 function tokenForUser(user) {
     //the subject aka sub is the subject of the token we are generating
@@ -13,9 +16,25 @@ function userRole(user) {
     return user.role;
 }
 
+function userId(user) {    
+    return user._id;
+}
+
+function createUser(requestObject) {
+    return new User({
+        email: requestObject.body.email,
+        password: requestObject.body.password,
+        role: defaultUserType
+    });
+}
+
 exports.signin = function(req, res, next) {
     //we have access to req.user from passport's done(null, user) at line 34 in passport.js file
-    res.send({ token: tokenForUser(req.user), role: userRole(req.user) });
+    mongooseHelperUserDetails.getUserDetails(req.user._id).then(function(user) {                    
+        res.status(200).json({ token: tokenForUser(req.user), role: userRole(req.user), userId: user._id, userDetails: user });
+    }).catch(function(error){
+        res.status(500).json({error: 'An error occured while retrieving your details. Please refresh the page and try again!'});
+    });    
 };
 
 exports.signup = function(req, res, next) {
@@ -33,20 +52,15 @@ exports.signup = function(req, res, next) {
 
         if(existingUser) {
             return res.status(422).send({ error: 'Email is in use' }); //422 - unprocessable entity
-        }
+        }        
 
-        const user = new User({
-            email: email,
-            password: password,
-            role: 'reseller'
-        });
-
+        const user = createUser(req);
         user.save(function(err) {
             if(err) {
                 return next(err);
             }
 
-            res.json({ token: tokenForUser(user), role: userRole(user) });            
+            res.status(200).json({ token: tokenForUser(user), role: userRole(user), userDetails: user});            
         });
-    })
+    });
 };

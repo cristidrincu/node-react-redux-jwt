@@ -1,0 +1,139 @@
+if(this.props.authStatus && this.props.userRole === 'reseller') {
+            return( 
+                <li className="nav-item">
+                    <Link to="/signout" className="nav-link">Sign out</Link>
+                    <Link to="/invite-friends" className="nav-link">Invite your friends</Link>
+                </li>
+            ); 
+        } else {
+            {/* render multiple elements. the key is there for react who thinks this is a list of components and wants to add a key to each component in the array. just plain integers suffice* */}
+            return[
+                <li className="nav-item" key={1}>
+                    <Link to="/signin" className="nav-link">Sign in</Link>
+                </li>,
+                <li className="nav-item" key={2}>
+                    <Link to="/signup" className="nav-link">Sign up</Link>
+                </li>
+            ];            
+        }
+
+        { this.props.children } {/*this should go in app, after <Header/>all components that are children of the App - this is how you render them*/}
+
+
+
+        
+    }
+    
+    <button onClick={this.handleButtonClick(localStorage.getItem('userId'))}>View more about your profile</button>
+
+
+    return[ 
+                <li className="nav-item" key={1}>
+                    <Link to="/signout" className="nav-link">Sign out</Link>                                        
+                </li>,
+                <li className="nav-item" key={2}>
+                    <Link to={"/profile/" + _id} className="nav-link">Profile</Link>
+                </li>,
+                <li className="nav-item" key={3}>                 
+                    <Link to={"/add-machine"} className="nav-link">Add machine</Link>
+                </li>
+            ];
+
+
+            return[
+                <li className="nav-item" key={1}>
+                    <Link to="/signin" className="nav-link">Sign in</Link>
+                </li>,
+                <li className="nav-item" key={2}>
+                    <Link to="/signup" className="nav-link">Sign up</Link>
+                </li>
+            ];
+
+
+            console.log(this.props);
+        const { handleSubmit, fields: {machineID} } = this.props;
+        const licensesCollection = [
+            'Basic', 
+            'Cache', 
+            'Enterprise datacenter', 
+            'Fibre channel', 
+            'High availability',
+             'Local virtual machines',
+             'Maintenance',
+             'Remote backup client',
+             'Remote backup server',
+             'Small business datacenter'
+             ];
+
+
+
+             var machineSchema = mongoose.Schema({
+    machineID: { type: String, unique: false }, //change unique to true, as right now i am just creating machine to test api
+    user: { type: mongoose.Schema.Types.ObjectId, ref: "user" },
+    machineName: { type: String, unique: false, lowercase: true },    //change unique to true, as right now i am just creating machine to test api
+    licenses: [licenseSchema] 
+});
+
+
+
+<div className="row">                                                
+                <div>
+                    { /** for toggling it, use this.state.open - ofcourse with an action creator */ }
+                    <Drawer open={false}>
+                        <MenuItem>Email: { email }</MenuItem>
+                        <MenuItem>Role: { role }</MenuItem>
+                    </Drawer>
+                </div>                
+                <div className="col-lg-12">
+                    <Table>
+                        <TableHeader>
+                            <TableRow>
+                                <TableHeaderColumn>Machine Name/ID</TableHeaderColumn>
+                                <TableHeaderColumn>Added on</TableHeaderColumn>
+                                <TableHeaderColumn>Added by</TableHeaderColumn>
+                                <TableHeaderColumn>Role</TableHeaderColumn>
+                                <TableHeaderColumn>Actions</TableHeaderColumn>
+                            </TableRow>                            
+                        </TableHeader>                        
+                        <TableBody>                                                                                                                
+                            { this.renderMachineCollection(machines) }
+                        </TableBody>    
+                    </Table>                                                                                               
+                </div>
+                <SimpleConfirmModal ref="modalDialog"/>                
+            </div>
+
+
+
+<Toolbar>                        
+                        <ToolbarGroup firstChild={true}>
+                            <Link to="/">
+                                <ToolbarTitle text="Syneto Client Portal" style={styleAppText} />
+                            </Link>                            
+                            { this.renderMaterialUIMenu() }
+                        </ToolbarGroup>
+                    </Toolbar>
+
+
+
+
+<TableRow key={ machine._id }>
+                    <TableRowColumn>{ machine.machineName }</TableRowColumn>
+                    <TableRowColumn>{ moment(machine.addedOn).format('DD/MM/YYYY') }</TableRowColumn>
+                    <TableRowColumn>
+                        <Link key={2} to={ `/machines/manage/${machine._id}` } machineDetails={machine}>
+                            <button style={ htmlButton }>                            
+                                <FontIcon className="material-icons" style={iconStyles} color={blue500}>account_circle</FontIcon>
+                            </button>
+                        </Link>
+                        <Link key={3} to={ "/machines/manage/" + machine._id + "/edit" }>
+                            <button style={ htmlButton }>
+                                <FontIcon className="material-icons" style={iconStyles} color={orange500}>mode_edit</FontIcon>
+                            </button>
+                        </Link>                                                
+                        <button style={ htmlButton } onClick={ this.handleModalOpen.bind(this, machine) } >
+                            <FontIcon className="material-icons" style={iconStyles} color={red500}>delete_sweep</FontIcon>
+                        </button>                        
+                    </TableRowColumn>
+                </TableRow>                                    
+        

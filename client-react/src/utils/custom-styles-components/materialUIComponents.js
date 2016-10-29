@@ -1,0 +1,5 @@
+const materialUIComponentsStyles = {
+    
+};
+
+export { materialUIComponentsStyles };

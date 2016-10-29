@@ -1,18 +1,21 @@
-/**
- * Created by cristiandrincu on 8/20/16.
- */
 import React, { Component } from 'react';
 import { reduxForm } from 'redux-form';
 import * as actions from '../../actions/index';
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
 
-class Signin extends Component {    
-    handleFormSubmit( {email, password} ) {        
-        this.props.signinUser({email, password});
+const tempStyles = {
+    marginTop: 40
+}
+
+class Signin extends Component {
+    handleFormSubmit({email, password}) {
+        this.props.signinUser({ email, password });
     }
 
     renderAlert() {
-        if(this.props.errorMessage) {
-            return(
+        if (this.props.errorMessage) {
+            return (
                 <div className="alert alert-danger">
                     <strong>Error logging in</strong> { this.props.errorMessage }
                 </div>
@@ -23,21 +26,28 @@ class Signin extends Component {
     render() {
         //reduxForm properties - we can write fields shorter using es6 rule - if key and value have the same name, we can just write: fields: { email, password }
         //however, i believe code is much more readable using fields: { email: email, password: password } for starters
-        const {handleSubmit, fields: { email: email, password: password } } = this.props;
+        const {handleSubmit, fields: { email: email, password: password, userProps: userProps } } = this.props;
 
-        return(
-            <form onSubmit={ handleSubmit(this.handleFormSubmit.bind(this)) }>            
-                <fieldset className="form-group">
-                    <label>Email</label>
-                    <input { ...email } className="form-control"/>
-                </fieldset>
-                <fieldset className="form-group">
-                    <label>Password</label>
-                    <input { ...password } type="password" className="form-control"/>
-                </fieldset>
-                { this.renderAlert() }
-                <button action="submit" className="btn btn-primary">Sign in</button>
-            </form>
+        return (
+            <div className="container" style={tempStyles}>
+                <form onSubmit={ handleSubmit(this.handleFormSubmit.bind(this)) }>
+                    <TextField
+                        fullWidth = { true }
+                        hintText = "Your email"
+                        floatingLabelText="Your email"
+                        errorText = {email.touched && email.error}
+                        {...email}/>
+                    <TextField
+                        fullWidth = { true }
+                        hintText = "Your password"
+                        floatingLabelText="Your password"
+                        errorText = {password.touched && password.error}
+                        type="password"
+                        {...password}/>
+                    { this.renderAlert() }
+                    <RaisedButton type="submit" label="Signin" primary={true}/>
+                </form>
+            </div>
         );
     }
 }
@@ -52,5 +62,8 @@ function mapStateToProps(state) {
 //reduxForm has its own reducer, which must be added to our apps own root reducer - see /reducers/index.js
 export default reduxForm({
     form: 'signin', //the actual name of the form
-    fields: ['email', 'password']
+    fields: ['email', 'password', 'userProps'],
+    initialValues: {
+        userProps: localStorage.getItem('_id')
+    }
 }, mapStateToProps, actions)(Signin);

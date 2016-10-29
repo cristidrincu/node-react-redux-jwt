@@ -1,0 +1,24 @@
+{
+    "env": {
+        "browser": false,
+        "commonjs": true,
+        "es6": false
+    },    
+    "installedESLint": true,
+    "parserOptions": {
+        "ecmaFeatures": {
+            "experimentalObjectRestSpread": true            
+        },
+        "sourceType": "module"
+    },    
+    "rules": {       
+        "linebreak-style": [
+            "error",
+            "unix"
+        ],        
+        "semi": [
+            "error",
+            "always"
+        ]
+    }
+}

@@ -1,15 +1,19 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-const bcrypt = require('bcrypt-nodejs');
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
+var bcrypt = require('bcrypt-nodejs');
+var Machine = require('./machine');
 
-const userSchema = new Schema({
+var userSchema = new Schema({
     email: { type: String, unique: true, lowercase: true },
     password:  String,
-    role: String
+    role: String,
+    machines: [{
+        type: mongoose.Schema.Types.ObjectId, ref: "Machine"
+    }]
 });
 
 userSchema.pre('save', function(next){
-    const user = this;
+    var user = this;
     bcrypt.genSalt(10, function(err, salt){
         if(err) {
             return next(err);
@@ -22,7 +26,7 @@ userSchema.pre('save', function(next){
             user.password = hash;
             next();
         });
-    })
+    });
 });
 
 userSchema.methods.comparePassword = function(candidatePassword, cb) {
@@ -35,6 +39,4 @@ userSchema.methods.comparePassword = function(candidatePassword, cb) {
     });
 };
 
-const ModelClass = mongoose.model('user', userSchema);
-
-module.exports = ModelClass;
+module.exports = mongoose.model('User', userSchema);

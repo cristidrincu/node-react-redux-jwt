@@ -31,14 +31,20 @@
     "axios": "^0.13.1",
     "babel-preset-stage-1": "^6.1.18",
     "eslint-plugin-react": "^6.1.2",
+    "i": "^0.3.5",
     "lodash": "^3.10.1",
     "material-ui": "^0.15.4",
+    "moment": "^2.15.0",
+    "npm": "^3.10.7",
     "react": "^0.14.3",
     "react-dom": "^0.14.3",
+    "react-loading": "0.0.9",
     "react-redux": "^4.0.0",
     "react-router": "^2.0.1",
+    "react-tap-event-plugin": "^1.0.0",
     "redux": "^3.0.4",
     "redux-form": "^5.3.2",
-    "redux-thunk": "^2.1.0"
+    "redux-thunk": "^2.1.0",
+    "underscore": "^1.8.3"
   }
 }

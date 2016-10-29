@@ -11,6 +11,8 @@ const cors = require('cors');
 
 try{
     mongoose.connect('mongodb://' + dBConfig.mongoUser + ':' + dBConfig.mongoPass + '@ds025232.mlab.com:25232/reactnodejwt');
+    // console.log(mongoose.connection.host);
+    // console.log(mongoose.connection.port);
 } catch(e) {
     console.log(e.message);
 }
